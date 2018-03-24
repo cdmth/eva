@@ -1,5 +1,5 @@
 const defaultConfig = {
-  PORT: process.env.PORT || 3000,
+  PORT: process.env.PORT || 3000
 }
 
 const config: object = {
@@ -11,8 +11,8 @@ const config: object = {
   }
 }
 
-function getEnv(env: string): object {
-  return config[env];
+function getEnv(env: string) {
+  return config[env]
 }
 
 export default {

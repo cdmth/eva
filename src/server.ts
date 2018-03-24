@@ -1,6 +1,7 @@
 import app from './app'
 
-import constants from './constants/constants'
+import constants from './config/constants'
+import './config/db'
 
 app.listen(constants.PORT, (err) => {
   if(err) {
