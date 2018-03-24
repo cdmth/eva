@@ -12,4 +12,4 @@ try {
 
 mongoose.connection
   .once('open', () => console.log('MongoDB running'))
-  .on('error', err => {throw err})
+  .on('error', err => { throw err })
