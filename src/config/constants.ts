@@ -2,7 +2,7 @@ const defaultConfig = {
   PORT: process.env.PORT || 3000
 }
 
-const config: object = {
+const config = {
   development: {
     DB_URL: 'mongodb://localhost:27017/eva-dev'
   },

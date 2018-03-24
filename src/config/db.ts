@@ -1,8 +1,7 @@
 import * as mongoose from 'mongoose'
+import * as bluebird from 'bluebird'
 
 import constants from './constants'
-
-mongoose.Promise = global.Promise
 
 try {
   mongoose.connect(constants.DB_URL)

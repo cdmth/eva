@@ -1,13 +1,13 @@
 import * as express from 'express';
 
-class App {
+import middlewares from './config/middlewares';
+import Routes from './modules';
+import './config/db';
 
-  constructor() {
-    this.app = express();
-  }
+const app = express();
 
-  public app: express.Application;
+middlewares(app)
 
-}
+app.use('/api/v1', Routes)
 
-export default new App().app;
+export default app

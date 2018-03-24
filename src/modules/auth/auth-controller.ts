@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 
 export const signup = async (req: Request, res: Response) => {
   try {
-    const user: void = await AuthServices.register(req.body)
+    const user: any = await AuthServices.register(req.body)
 
     return res.status(200).json(user)
   } catch (err) {

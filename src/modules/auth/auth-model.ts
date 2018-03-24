@@ -1,8 +1,8 @@
-import * as mongoose from 'mongoose'
+import { Schema, model } from 'mongoose'
 
-const AuthSchema = new mongoose.Schema({
+const AuthSchema: Schema = new Schema({
   email: String,
   password: String,
 })
 
-export default mongoose.model('Auth', AuthSchema)
+export default model('Auth', AuthSchema) 

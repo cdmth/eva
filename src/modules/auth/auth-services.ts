@@ -1,7 +1,7 @@
 import AuthModel from './auth-model'
 
 class AuthServices {
-  register({ email, password }: { email: string, password: string }): void {
+  register({ email, password }: { email: string, password: string }) {
     if(!email) {
       throw new Error('email_required')
     } else if(!password) {
