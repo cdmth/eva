@@ -2,6 +2,7 @@
   "name": "eva",
   "version": "1.0.0",
   "description": "Eva app",
+  "repository": {},
   "main": "index.js",
   "scripts": {
     "build": "tsc",
