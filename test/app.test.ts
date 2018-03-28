@@ -4,13 +4,6 @@ import * as mongoose from 'mongoose'
 import app from "../src/app"
 import constants from '../src/config/constants'
 
-beforeAll(async () => {
-  let database = mongoose.connect(constants.DB_URL)
-  .then(res => {
-    res.connection.db.dropDatabase()
-  })
-});
-
 describe("GET /", () => {
   it("Should return 404", (done) => {
     request(app).get("/")
@@ -19,6 +12,21 @@ describe("GET /", () => {
 })
 
 describe("POST /auth/signup", () => {
+
+  beforeAll(async () => {
+    let database = mongoose.connect(constants.DB_URL)
+    .then(res => {
+      res.connection.db.dropDatabase()
+    })
+  });
+
+  let okEmail = "test@example.com"
+  let okPassword = "abc123"
+
+  let invalidEmail = "invalid_email"
+  let invalidPasswordLength = "abc12"
+  let invalidPasswordNumbers = "abc"
+
   it("Should return 400 without params", (done) => {
     request(app).post("/api/v1/auth/signup")
       .expect(400, done)
@@ -47,17 +55,81 @@ describe("POST /auth/signup", () => {
     })
   })
 
-  it("Should add the user", (done) => {
-    let user = {
-      "email": "test@example.com",
-      "password": "abc123"
-    }
+  it("Should return error with invalid email", (done) => {
     request(app).post("/api/v1/auth/signup")
-    .send(user)
+    .send({email: invalidEmail, password: okPassword})
+    .expect(400, done)
+  })
+
+  it("Should return error with too short password", (done) => {
+    request(app).post("/api/v1/auth/signup")
+    .send({email: okEmail, password: invalidPasswordLength})
+    .expect(400, done)
+  })
+
+  it("Should return error with password without numbers", (done) => {
+    request(app).post("/api/v1/auth/signup")
+    .send({email: okEmail, password: invalidPasswordNumbers})
+    .expect(400, done)
+  })  
+
+  it("Should add the user", (done) => {
+    request(app).post("/api/v1/auth/signup")
+    .send({
+      "email": okEmail,
+      "password": okPassword
+    })
     .expect(200)
     .end(function(err, res) {
-      expect(res.body).toMatchObject(user)
+      expect(res.body).toMatchObject({
+        "email": okEmail
+      })
       done()
     })
+  })
+
+  it("Should return error with duplicate email", (done) => {
+    request(app).post("/api/v1/auth/signup")
+    .send({
+      "email": okEmail,
+      "password": okPassword
+    })
+    .expect(400, done)
   })  
+
+})
+
+describe("POST /auth/login", () => {
+  let okEmail = "test@example.com"
+  let okPassword = "abc123"
+
+  let wrongEmail = "test1@example.com"
+  let wrongPassword = "abc124"
+
+  it("Should return 401 with wrong email and password", (done) => {
+    request(app).post("/api/v1/auth/login")
+      .send({
+        "email": wrongEmail,
+        "password": wrongPassword
+      })
+      .expect(401, done)
+  })
+
+  it("Should return 401 with correct email but wrong password", (done) => {
+    request(app).post("/api/v1/auth/login")
+      .send({
+        "email": okEmail,
+        "password": wrongPassword
+      })
+      .expect(401, done)
+  })
+
+  it("Should return 200 with correct credentials", (done) => {
+    request(app).post("/api/v1/auth/login")
+      .send({
+        "email": okEmail,
+        "password": okPassword
+      })
+      .expect(200, done)
+  })
 })
