@@ -132,4 +132,19 @@ describe("POST /auth/login", () => {
       })
       .expect(200, done)
   })
+
+  it("Should contain _id, email, and JWT", (done) => {
+    request(app).post("/api/v1/auth/login")
+      .send({
+        "email": okEmail,
+        "password": okPassword
+      })
+      .expect(200)
+      .end(function(err, res) {
+        expect(res.body.email).toMatch(okEmail)
+        expect(res.body.token).toBeTruthy()
+        expect(res.body._id).toBeTruthy()
+        done()
+      })
+  })
 })
