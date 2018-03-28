@@ -1,6 +1,5 @@
-import * as mongoose from 'mongoose'
-
 import constants from './constants'
+import * as mongoose from 'mongoose'
 
 try {
   mongoose.connect(constants.DB_URL)

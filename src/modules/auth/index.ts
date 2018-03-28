@@ -2,8 +2,8 @@ import { Router } from 'express'
 
 import * as authController from './auth-controller'
 
-const routes = Router() 
+const routes = Router()
 
-routes.post('/register', authController.signup)
+routes.post('/signup', authController.signup)
 
 export default routes

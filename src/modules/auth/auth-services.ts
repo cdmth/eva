@@ -1,19 +1,17 @@
-import AuthModel from './auth-model'
+import AuthSchema from './auth-model'
+import { model } from 'mongoose'
 
-class AuthServices {
-  register({ email, password }: { email: string, password: string }) {
-    if(!email) {
-      throw new Error('email_required')
-    } else if(!password) {
-      throw new Error('password_required')
-    }
+export const register = ({ email, password }) => {
+  if(!email) {
+    throw new Error('email_required')
+  } else if(!password) {
+    throw new Error('password_required')
+  }
 
-    try {
-      return AuthModel.create({ email, password })
-    } catch (err) {
-      throw err
-    }
+  try {
+    return model('Auth', AuthSchema)
+      .create({ email, password })
+  } catch (err) {
+    throw err
   }
 }
-
-export default new AuthServices
