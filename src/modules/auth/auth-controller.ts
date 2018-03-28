@@ -13,7 +13,7 @@ export const signup =
 }
 
 export const login = (req: Request, res: Response, next: any) => {
-  res.status(200).json(req.user)
+  res.status(200).json(req.user.toAuthJSON())
 
   return next()
 }

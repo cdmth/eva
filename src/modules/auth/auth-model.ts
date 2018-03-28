@@ -1,7 +1,10 @@
 import { Document, Schema, model  } from 'mongoose'
+import { hashSync, compareSync } from 'bcrypt-nodejs'
 import * as validator from 'validator'
 import * as uniqueValidator from 'mongoose-unique-validator'
-import { hashSync, compareSync } from 'bcrypt-nodejs'
+import * as jwt from 'jsonwebtoken'
+
+import constants from '../../config/constants'
 
 interface IAuth extends Document {
   authenticateUser(password: string): boolean
@@ -53,6 +56,25 @@ AuthSchema.methods = {
 
   authenticateUser(password: string): boolean {
     return compareSync(password, this.password)
+  },
+
+  // Overriding toJSON method
+  toJSON(): object {
+    return {
+      _id: this._id,
+      email: this.email
+    }
+  },
+
+  toAuthJSON(): object {
+    return {
+      token: this.createToken(),
+      ...this.toJSON()
+    }
+  },
+
+  createToken() {
+    return jwt.sign({ _id: this._id }, constants.JWT_SECRET)
   }
 }
 

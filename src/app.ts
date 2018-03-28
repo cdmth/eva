@@ -6,8 +6,6 @@ import * as morgan from 'morgan'
 import middlewares from './config/middlewares'
 import './config/db'
 import routes from './modules'
-import constants from './config/constants'
-
 
 const app = express()
 

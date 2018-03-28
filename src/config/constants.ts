@@ -4,10 +4,12 @@ const defaultConfig = {
 
 const config = {
   development: {
-    DB_URL: 'mongodb://localhost:27017/eva-dev'
+    DB_URL: 'mongodb://localhost:27017/eva-dev',
+    JWT_SECRET: 'secret'
   },
   test: {
-    DB_URL: 'mongodb://localhost:27017/eva-test'
+    DB_URL: 'mongodb://localhost:27017/eva-test',
+    JWT_SECRET: 'secret'
   }
 }
 
