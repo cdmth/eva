@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express'
+import { jwtMiddleWare } from './auth/auth-services'
 
 import authRoutes from './auth'
-import { jwtMiddleWare } from './auth/auth-services'
 
 const routes = Router()
 

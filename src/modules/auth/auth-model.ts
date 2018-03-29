@@ -1,5 +1,6 @@
 import { Document, Schema, model  } from 'mongoose'
 import { hashSync, compareSync } from 'bcrypt-nodejs'
+import * as mailer from '../mailer/mailer'
 import * as validator from 'validator'
 import * as uniqueValidator from 'mongoose-unique-validator'
 import * as jwt from 'jsonwebtoken'
@@ -33,6 +34,9 @@ export const AuthSchema = new Schema({
       },
       message: "Not valid password"
     }
+  },
+  verified: {
+    type: Boolean,
   }
 });
 
@@ -47,6 +51,16 @@ AuthSchema.pre('save', function(next) {
   }
 
   return next()
+})
+
+AuthSchema.post('save', function(doc, next: any) {
+  mailer.signUpMail(this.email).then(() => {
+    return next()
+  }).catch((err) => {
+    console.log("Saved register but problem sending the signup mail")
+    console.log(err)
+    return next()
+  })
 })
 
 AuthSchema.methods = {
