@@ -276,3 +276,16 @@ describe("POST /api/v1/auth/forgot", () => {
       .expect(200, done)
   })
 })
+
+describe("POST /api/v1/auth/recover", () => {
+  it("Should return 404 without token", (done) => {
+    request(app).post("/api/v1/auth/recover/")
+      .expect(404, done)
+  })
+
+  it("Should return 400 with wrong token", (done) => {
+    request(app).post("/api/v1/auth/recover/xxx")
+      .send({"email": "test2@example.com"})
+      .expect(400, done)
+  })
+})

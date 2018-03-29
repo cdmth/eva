@@ -10,8 +10,9 @@ import constants from '../../config/constants'
 
 interface IAuth extends Document {
   authenticateUser(password: string): boolean
-  generateResetToken(): string
+  generateResetToken(): any
   resetToken: string
+  resetTokenTime: number
   email: string
   password: string
 }
@@ -42,6 +43,10 @@ export const AuthSchema = new Schema({
   },
   resetToken: {
     type: String,
+    trim: true
+  },
+  resetTokenTime: {
+    type: Number,
     trim: true
   }
 });
@@ -88,7 +93,10 @@ AuthSchema.methods = {
   },
 
   generateResetToken() {
-    return crypto.randomBytes(32).toString('hex');
+    return {
+      token: crypto.randomBytes(32).toString('hex'),
+      time: Date.now()
+    }
   }
 }
 
