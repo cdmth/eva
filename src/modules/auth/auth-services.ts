@@ -60,7 +60,7 @@ export const reset = async ({ email }:{ email: string }) => {
     user.resetTokenTime = time
     user.save()
 
-    await resetPasswordMail({email: email, resetToken: user.resetToken})
+    await resetPasswordMail({email, resetToken: user.resetToken})
     
     return "token_generated"
   } catch (err) {
