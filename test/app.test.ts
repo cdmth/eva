@@ -148,3 +148,33 @@ describe("POST /auth/login", () => {
       })
   })
 })
+
+describe("GET /hello", () => {
+
+  let token = ""
+  let okEmail = "test@example.com"
+  let okPassword = "abc123"
+
+  beforeAll(async (done) => {
+    request(app).post("/api/v1/auth/login")
+      .send({
+        "email": okEmail,
+        "password": okPassword
+      })
+      .then((res) => {
+        token = res.body.token
+        done()
+      })      
+  });
+
+  it("Should return 401 unauthorized without token", (done) => {
+    request(app).get("/api/v1/hello")
+      .expect(401, done)
+  })
+
+  it("Should return 200 with correct token", (done) => {
+    request(app).get("/api/v1/hello")
+      .set('Authorization', 'JWT ' + token)
+      .expect(200, done)
+  })
+})

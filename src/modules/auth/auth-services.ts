@@ -1,5 +1,5 @@
 import Auth from './auth-model'
-import { authLocal } from './passport'
+import { authLocal, authJWT } from './passport'
 import { Request, Response } from 'express'
 
 
@@ -19,4 +19,8 @@ export const register = ({ email, password }:{ email: string, password: string})
 
 export const loginMiddleWare = (req: Request, res: Response, next: any) => {
   return authLocal(req, res, next)
+}
+
+export const jwtMiddleWare = (req: Request, res: Response, next: any) => {
+  return authJWT(req, res, next)
 }
