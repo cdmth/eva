@@ -1,4 +1,5 @@
 import Auth from './auth-model'
+import * as jwt from 'jsonwebtoken'
 import { authLocal, authJWT } from './passport'
 import { Request, Response } from 'express'
 
@@ -14,6 +15,33 @@ export const register = ({ email, password }:{ email: string, password: string})
     return Auth.create({ email, password })
   } catch (err) {
     throw err
+  }
+}
+
+export const updateAuth = async (
+  { authorization }:{ authorization: string},
+  { email, password }:{ email: string, password: string }) => {
+
+  if(!email && !password) {
+    throw new Error('no_parameters')
+  }
+
+  let payload: any = await jwt.decode(authorization.substring(4))
+
+  try {
+    let user: any = await Auth.findOne({_id: payload._id})
+      .catch((err) => {
+        throw new Error(err)
+      })
+
+    if(!!email)
+      user.email = email
+    if(!!password)
+      user.password = password
+
+    return user.save()
+  } catch (err) {
+      throw new Error(err)
   }
 }
 

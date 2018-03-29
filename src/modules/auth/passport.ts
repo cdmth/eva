@@ -49,7 +49,6 @@ const jwtLogin =
     }
   })
 
-
   passport.use(localLogin)
   passport.use(jwtLogin)
 

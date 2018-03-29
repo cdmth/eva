@@ -9,6 +9,8 @@ import constants from '../../config/constants'
 
 interface IAuth extends Document {
   authenticateUser(password: string): boolean
+  email: string
+  password: string
 }
 
 export const AuthSchema = new Schema({
@@ -35,9 +37,6 @@ export const AuthSchema = new Schema({
       message: "Not valid password"
     }
   },
-  verified: {
-    type: Boolean,
-  }
 });
 
 AuthSchema.plugin(uniqueValidator, {
@@ -51,16 +50,6 @@ AuthSchema.pre('save', function(next) {
   }
 
   return next()
-})
-
-AuthSchema.post('save', function(doc, next: any) {
-  mailer.signUpMail(this.email).then(() => {
-    return next()
-  }).catch((err) => {
-    console.log("Saved register but problem sending the signup mail")
-    console.log(err)
-    return next()
-  })
 })
 
 AuthSchema.methods = {
