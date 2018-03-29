@@ -21,3 +21,23 @@ export const signUpMail = async (email) => {
     throw new Error(err)
   }
 }
+
+export const resetPasswordMail = async (creds) => {
+  let data = {
+    from: 'Excited User <me@samples.mailgun.org>',
+    to: 'eva.dev.mailer@gmail.com',
+    subject: 'Hello',
+    text: `Hello, here is your reset token for ${creds.email}: ${creds.resetToken}`
+  }
+
+  try {
+    if(process.env.NODE_ENV === 'development') {
+      const mail = await (mailgun.messages().send(data))
+      console.log("Sent register mail")
+    } else {
+      return true
+    }
+  } catch (err) {
+    throw new Error(err)
+  }
+}

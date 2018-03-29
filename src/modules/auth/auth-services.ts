@@ -2,6 +2,7 @@ import Auth from './auth-model'
 import * as jwt from 'jsonwebtoken'
 import { authLocal, authJWT } from './passport'
 import { Request, Response } from 'express'
+import { resetPasswordMail } from '../mailer/mailer';
 
 
 export const register = ({ email, password }:{ email: string, password: string}) => {
@@ -41,8 +42,32 @@ export const updateAuth = async (
 
     return user.save()
   } catch (err) {
-      throw new Error(err)
+    throw new Error(err)
   }
+}
+
+export const reset = async ({ email }:{ email: string }) => {
+  if(!email) {
+    throw new Error('email_required')
+  }
+
+  try {
+    const user = await Auth.findOne({ email })
+
+    if(!user) {
+      throw new Error("email_not_found")
+    }
+
+    user.resetToken = user.generateResetToken()
+    user.save()
+
+    await resetPasswordMail({email: email, resetToken: user.resetToken})
+    
+    return "token_generated"
+  } catch (err) {
+    throw new Error(err)
+  }
+
 }
 
 export const loginMiddleWare = (req: Request, res: Response, next: any) => {

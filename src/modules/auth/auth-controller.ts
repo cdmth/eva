@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
-import { register, updateAuth } from './auth-services'
+import { register, updateAuth, reset } from './auth-services'
+import { resetPasswordMail } from '../mailer/mailer'
 
 export const signup = async (req: Request, res: Response) => {
   try {
@@ -25,4 +26,15 @@ export const login = (req: Request, res: Response, next: any) => {
   res.status(200).json(req.user.toAuthJSON())
 
   return next()
+}
+
+export const forgot = async (req: Request, res: Response) => {
+  try {
+    const token = await (reset(req.body))
+
+    return res.status(200).json(token)
+  } catch (err) {
+    return res.status(400)
+      .json({ error: err.message ? err.message : String(err) })
+  }
 }

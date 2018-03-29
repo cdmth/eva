@@ -263,3 +263,16 @@ describe("POST /auth/update", () => {
       .expect(200, done)
   })
 })
+
+describe("POST /api/v1/auth/forgot", () => {
+  it("Should return 400 without email", (done) => {
+    request(app).post("/api/v1/auth/forgot")
+      .expect(400, done)
+  })
+
+  it("Should return 200 with correct email", (done) => {
+    request(app).post("/api/v1/auth/forgot")
+      .send({"email": "test2@example.com"})
+      .expect(200, done)
+  })
+})
