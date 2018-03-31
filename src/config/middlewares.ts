@@ -1,5 +1,4 @@
 import * as bodyParser from 'body-parser'
-
 import constants from './constants'
 
 export default app => {

@@ -15,32 +15,30 @@ export const EstateSchema = new Schema({
   },
   zipCode: {
     type: Number,
-    trim: true,
   },
   streetName: {
     type: String,
-    trim: true,
   },
   streetNumber: {
     type: Number,
-    trim: true,
   },
   latitude: {
     type: String,
-    trim: true,
   },
   longitude: {
     type: String,
-    trim: true,
   },
   price: {
     type: Number,
-    required: true,
   },
   description: {
     type: String,
   }
-});
+},
+{
+  timestamps: true
+}
+);
 
 const Estate = model<IEstate>('Estate', EstateSchema)
 
