@@ -1,9 +1,11 @@
 import { Document, Schema, model  } from 'mongoose'
 
 interface IEstate extends Document {
-  city: String,
-  price: Number,
+  city: String
+  price: Number
   description: String
+  zipCode: String
+  streetName: String 
 }
 
 export const EstateSchema = new Schema({
@@ -11,6 +13,9 @@ export const EstateSchema = new Schema({
     type: String,
     trim: true,
     required: true,
+  },
+  company: {
+    type: String
   },
   zipCode: {
     type: String,
@@ -32,7 +37,12 @@ export const EstateSchema = new Schema({
   },
   description: {
     type: String,
-  }
+  },
+  images: [{
+    src: String,
+    thumbnail: String,
+    description: { type: String, trim: true }
+  }]
 },
 {
   timestamps: true

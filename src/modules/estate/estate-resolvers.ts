@@ -6,7 +6,8 @@ const estateResolvers = {
   Date: GraphqlDate,
   Query: {
     estate: (_, { _id }) => Estate.findById(_id),
-    estates: () => Estate.find({})
+    estates: () => Estate.find({}),
+    companyEstates: (_, { _id }) => Estate.find({company: _id})
   },
   Mutation: {
     createEstate: (_, args) => Estate.create(args),

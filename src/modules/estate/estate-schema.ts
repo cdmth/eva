@@ -6,6 +6,7 @@ const estateSchema = `
   type Estate {
     _id: ID
     city: String
+    company: String
     zipCode: String
     streetName: String
     streetNumber: Int
@@ -20,6 +21,7 @@ const estateSchema = `
   type Query {
     estate(_id: ID!): Estate
     estates: [Estate]
+    companyEstates(_id: ID!): [Estate]
   }
 
   type Mutation {
