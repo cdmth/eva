@@ -2,15 +2,15 @@ var seeder = require('mongoose-seed');
 var faker = require('faker');
 
 // Connect to MongoDB via Mongoose
-seeder.connect('mongodb://localhost:27017/eva-test', function() {
+seeder.connect('mongodb://localhost:27017/eva-dev', function() {
  
   // Load Mongoose models
   seeder.loadModels([
-    './src/modules/auth/auth-model.ts'
+    './src/modules/estate/estate-model.ts'
   ]);
  
   // Clear specified collections
-  seeder.clearModels(['Auth'], function() {
+  seeder.clearModels(['Estate'], function() {
  
     // Callback to populate DB once collections have been cleared
     seeder.populateModels(data, function() {
@@ -22,17 +22,23 @@ seeder.connect('mongodb://localhost:27017/eva-test', function() {
 
 var docs = [];
 
-for(var i=0; i<10; i++) {
+for(var i=0; i<100; i++) {
     docs.push({
-        'email': faker.internet.email(),
-        'password': 'password123'
+      city: faker.address.city(),
+      zipCode: faker.address.zipCode(),
+      streetName: faker.address.streetName(),
+      streetNumber: faker.random.number(),
+      latitude: faker.address.latitude(),
+      longitude: faker.address.longitude(),
+      price: faker.random.number(),
+      description: faker.lorem.paragraph(),
     })
 }
  
 // Data array containing seed data - documents organized by Model
 var data = [
     {
-        'model': 'Auth',
+        'model': 'Estate',
         'documents': docs
     }
 ];
