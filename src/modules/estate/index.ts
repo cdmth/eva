@@ -1,5 +1,5 @@
-import schema from '../estate/estate-schema'
-import resolvers from '../estate/estate-resolvers'
+import schema from './estate-schema'
+import resolvers from './estate-resolvers'
 
 export const estateSchema = schema
-export const estateResolver = resolvers
+export const estateResolvers = resolvers

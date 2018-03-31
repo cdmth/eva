@@ -1,6 +1,4 @@
 const estateSchema = `
-  scalar Date
-
   type Status {
     message: String!
   }
@@ -8,7 +6,7 @@ const estateSchema = `
   type Estate {
     _id: ID
     city: String
-    zipCode: Int
+    zipCode: String
     streetName: String
     streetNumber: Int
     latitude: String
@@ -19,11 +17,6 @@ const estateSchema = `
     updatedAt: Date
   }
 
-  type schema {
-    query: Query,
-    mutation: Mutation
-  }
-
   type Query {
     estate(_id: ID!): Estate
     estates: [Estate]
@@ -32,7 +25,7 @@ const estateSchema = `
   type Mutation {
     createEstate(
       city: String, 
-      zipCode: Int, 
+      zipCode: String, 
       streetName: String,
       streetNumber: Int,
       price: Int,
@@ -42,7 +35,7 @@ const estateSchema = `
     updateEstate(
       _id: ID!,
       city: String, 
-      zipCode: Int, 
+      zipCode: String, 
       streetName: String,
       streetNumber: Int,
       price: Int,

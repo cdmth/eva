@@ -4,7 +4,6 @@ interface IEstate extends Document {
   city: String,
   price: Number,
   description: String
-  findAll(): any
 }
 
 export const EstateSchema = new Schema({
@@ -14,7 +13,7 @@ export const EstateSchema = new Schema({
     required: true,
   },
   zipCode: {
-    type: Number,
+    type: String,
   },
   streetName: {
     type: String,

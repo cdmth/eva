@@ -5,16 +5,21 @@ import { makeExecutableSchema } from 'graphql-tools'
 import { mergeTypes, mergeResolvers } from 'merge-graphql-schemas'
 import { graphqlExpress } from 'apollo-server-express'
 
-import { estateSchema, estateResolver } from '../estate/'
+import rootSchema from './root-schema'
+import { estateSchema, estateResolvers } from '../estate/'
+import { companySchema, companyResolvers } from '../company/'
 
 const routes = Router()
 
 const allSchemas = [
-  estateSchema
+  rootSchema,
+  estateSchema,
+  companySchema
 ];
 
 const allResolvers = [
-  estateResolver
+  estateResolvers,
+  companyResolvers
 ]
  
 const typeDefs = mergeTypes(allSchemas, { all: true });
