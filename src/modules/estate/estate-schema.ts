@@ -1,21 +1,8 @@
-import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
-import resolvers from './estate-resolvers'
-
-const typeDefs = `
+const estateSchema = `
   scalar Date
 
   type Status {
     message: String!
-  }
-
-  type schema {
-    query: Query,
-    mutation: Mutation
-  }
-
-  type Query {
-    estate(_id: ID!): Estate
-    estates: [Estate]
   }
 
   type Estate {
@@ -30,6 +17,16 @@ const typeDefs = `
     description: String
     createdAt: Date
     updatedAt: Date
+  }
+
+  type schema {
+    query: Query,
+    mutation: Mutation
+  }
+
+  type Query {
+    estate(_id: ID!): Estate
+    estates: [Estate]
   }
 
   type Mutation {
@@ -56,6 +53,4 @@ const typeDefs = `
 }
 `
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
-
-export default schema
+export default estateSchema

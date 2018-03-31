@@ -2,11 +2,11 @@ import Estate from './estate-model';
 
 import * as GraphqlDate from 'graphql-date'
 
-const resolvers = {
+const estateResolvers = {
   Date: GraphqlDate,
   Query: {
     estate: (_, { _id }) => Estate.findById(_id),
-    estates: () => Estate.find({}),
+    estates: () => Estate.find({})
   },
   Mutation: {
     createEstate: (_, args) => Estate.create(args),
@@ -24,4 +24,4 @@ const resolvers = {
   }
 };
 
-export default resolvers;
+export default estateResolvers

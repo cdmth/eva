@@ -1,8 +1,5 @@
-import { Router } from 'express'
-import * as estateController from './estate-controller'
+import schema from '../estate/estate-schema'
+import resolvers from '../estate/estate-resolvers'
 
-const routes = Router()
-
-routes.use('/', estateController.estateEndpoint)
-
-export default routes
+export const estateSchema = schema
+export const estateResolver = resolvers
