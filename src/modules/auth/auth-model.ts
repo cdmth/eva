@@ -57,6 +57,7 @@ AuthSchema.plugin(uniqueValidator, {
 
 AuthSchema.pre('save', function(next) {
   if(this.isModified('password')) {
+    //@ts-ignore
     this.password = this._hashPassword(this.password)
     return next()
   }
@@ -65,7 +66,7 @@ AuthSchema.pre('save', function(next) {
 })
 
 AuthSchema.methods = {
-  _hashPassword(password: string): string {
+  _hashPassword(password: string): void {
     return hashSync(password)
   },
 

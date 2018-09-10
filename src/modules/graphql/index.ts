@@ -6,19 +6,16 @@ import { mergeTypes, mergeResolvers } from 'merge-graphql-schemas'
 import { graphqlExpress } from 'apollo-server-express'
 
 import rootSchema from './root-schema'
-import { estateSchema, estateResolvers } from '../estate/'
 import { companySchema, companyResolvers } from '../company/'
 
 const routes = Router()
 
 const allSchemas = [
   rootSchema,
-  estateSchema,
   companySchema
 ];
 
 const allResolvers = [
-  estateResolvers,
   companyResolvers
 ]
  
